@@ -28,7 +28,7 @@ function verifyNode () {
 }
 
 function verifyNpm (ci) {
-  const stdout = childProcess.execFileSync(CONFIG.getNpmBinPath(ci), ['--version'], {env: process.env})
+  const stdout = childProcess.execFileSync(CONFIG.getNpmBinPath(), ['--version'], {env: process.env})
   const fullVersion = stdout.toString().trim()
   const majorVersion = fullVersion.split('.')[0]
   const oldestMajorVersionSupported = ci ? 6 : 3
