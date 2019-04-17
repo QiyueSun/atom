@@ -16,7 +16,7 @@ jobs:
       versionSpec: 8.9.3
     displayName: Install Node.js 8.9.3
 
-  - script: npm install npm@6.2.0
+  - script: cd script && npm install npm@6.2.0
     displayName: Update npm
 
   - script: PATH="/usr/local/bin/npm:${PATH}" echo $PATH && which npm && npm --version && script/bootstrap
