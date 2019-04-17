@@ -108,9 +108,20 @@ jobs:
       testRunTitle: Windows $(buildArch)
     condition: ne(variables['Atom.SkipTests'], 'true')
 
+  - script: |
+      IF NOT EXIST %ARTIFACT_STAGING_DIR%/crash-reports MKDIR %ARTIFACT_STAGING_DIR%/crash-reports
+      IF EXIST "%Temp%/Atom Crashes" (
+        cd "%Temp%/Atom Crashes"
+        cp *.dmp %ARTIFACT_STAGING_DIR%/crash-reports
+      )
+    displayName: Stage Crash Reports
+    condition: failed()
+    env:
+      ARTIFACT_STAGING_DIR: $(Build.ArtifactStagingDirectory)
+
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: ${TEMP}/Atom Crashes
+      PathtoPublish: $(Build.ArtifactStagingDirectory)/crash-reports
       ArtifactName: crash-reports.zip
     displayName: Upload Crash Reports
     condition: and(failed(), eq(variables['IsReleaseBranch'], 'false'))
