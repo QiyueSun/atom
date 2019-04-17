@@ -109,10 +109,10 @@ jobs:
     condition: ne(variables['Atom.SkipTests'], 'true')
 
   - script: |
-      IF NOT EXIST "%ARTIFACT_STAGING_DIR%/crash-reports" MKDIR "%ARTIFACT_STAGING_DIR%/crash-reports"
+      IF NOT EXIST "%ARTIFACT_STAGING_DIR%\crash-reports" MKDIR "%ARTIFACT_STAGING_DIR%\crash-reports"
       IF EXIST "%Temp%/Atom Crashes" (
         cd "%Temp%/Atom Crashes"
-        cp *.dmp "%ARTIFACT_STAGING_DIR%/crash-reports"
+        cp * "%ARTIFACT_STAGING_DIR%\crash-reports"
       )
     displayName: Stage Crash Reports
     condition: failed()
